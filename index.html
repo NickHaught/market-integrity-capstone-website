@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Integrity Analysis System for Prediction Markets</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Noto Sans', sans-serif;
+  color: #333;
+}
+
+/* override bulma navbar */
+.navbar {
+  border-bottom: 1px solid #eee;
+}
+.navbar-item {
+  font-size: .9rem;
+}
+.navbar-item.is-active {
+  font-weight: 700;
+  color: #363636 !important;
+}
+
+/* page routing */
+.pg { display: none; }
+.pg.on { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* hero section */
+.project-hero {
+  padding: 5rem 1.5rem 2.5rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.project-hero h1 {
+  font-family: 'Noto Serif', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: .6rem;
+  line-height: 1.2;
+}
+.authors {
+  font-size: 1.05rem;
+  margin-bottom: .2rem;
+}
+.authors a { color: #333; }
+.affiliation {
+  font-size: .9rem;
+  color: #888;
+  margin-bottom: .3rem;
+}
+.conference {
+  font-size: .85rem;
+  color: #888;
+  margin-bottom: 1.2rem;
+}
+.project-links {
+  display: flex;
+  justify-content: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .4rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: .85rem;
+  color: #333;
+  transition: border-color .2s;
+}
+.project-links a:hover {
+  border-color: #999;
+  text-decoration: none;
+}
+
+/* content sections */
+.content-section {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+.content-section + .content-section {
+  border-top: 1px solid #eee;
+}
+.content-section h2 {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: .8rem;
+}
+.content-section h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 1.2rem;
+  margin-bottom: .4rem;
+}
+.content-section p {
+  font-size: .95rem;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: .7rem;
+}
+
+/* figure placeholder */
+.fig-placeholder {
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #aaa;
+  font-size: .85rem;
+  margin: 1.2rem 0;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* simple table */
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+  margin: 1rem 0;
+}
+.simple-table th {
+  text-align: left;
+  padding: .5rem .7rem;
+  border-bottom: 2px solid #ddd;
+  font-weight: 700;
+  font-size: .8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.simple-table td {
+  padding: .45rem .7rem;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+/* stats grid */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .8rem;
+  margin: 1rem 0;
+}
+.stat-box {
+  text-align: center;
+  padding: 1rem .5rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+.stat-box .num {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+}
+.stat-box .lbl {
+  font-size: .72rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-top: .15rem;
+}
+
+/* timeline */
+.timeline-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+  padding: .8rem 0;
+  border-bottom: 1px solid #eee;
+}
+.timeline-item .when {
+  font-size: .82rem;
+  font-weight: 700;
+  color: #888;
+}
+.timeline-item h4 {
+  font-size: .95rem;
+  font-weight: 700;
+  margin-bottom: .15rem;
+}
+.timeline-item p {
+  font-size: .88rem;
+  color: #666;
+  margin-bottom: 0;
+}
+
+/* team */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+.team-member {
+  text-align: center;
+}
+.team-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  margin: 0 auto .7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .75rem;
+  color: #bbb;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+.team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.team-member h4 {
+  font-size: .95rem;
+  font-weight: 700;
+  margin-bottom: .1rem;
+}
+.team-member .role {
+  font-size: .8rem;
+  color: #888;
+}
+.team-member .email {
+  font-size: .78rem;
+  color: #4a8fe7;
+  margin-top: .2rem;
+}
+
+/* market demo */
+.demo-intro {
+  padding: 4.5rem 1.5rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.demo-intro h1 {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: .4rem;
+}
+.demo-intro p {
+  font-size: .92rem;
+  color: #666;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.demo-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+.contract-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .8rem;
+}
+.contract-card .tag-label {
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #999;
+  margin-bottom: .2rem;
+}
+.contract-card .question {
+  font-weight: 600;
+  font-size: .95rem;
+}
+.contract-card .price-display {
+  text-align: right;
+}
+.contract-card .price-val {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: monospace;
+  transition: color .3s;
+}
+.contract-card .price-val.up { color: #22a867; }
+.contract-card .price-val.dn { color: #d44; }
+.contract-card .price-sub {
+  font-size: .7rem;
+  color: #999;
+}
+.chart-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: .8rem;
+  margin-bottom: .8rem;
+  background: #fafafa;
+}
+.chart-container canvas {
+  width: 100%;
+  height: 240px;
+  display: block;
+}
+.btn-row {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.dbtn {
+  padding: .4rem .9rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.dbtn:hover { border-color: #999; }
+.dbtn.on { background: #333; color: #fff; border-color: #333; }
+.dbtn.warn { border-color: #d44; color: #d44; }
+.dbtn.warn:hover, .dbtn.warn.on { background: #d44; color: #fff; border-color: #d44; }
+.status-line {
+  font-size: .78rem;
+  color: #999;
+  padding: .4rem 0;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.status-line b { color: #555; }
+.vol-track {
+  display: flex;
+  height: 10px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #eee;
+  margin-top: .5rem;
+}
+.vol-track div { height: 100%; transition: width .3s; }
+.explainer {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.1rem 1.3rem;
+  margin-top: 1.2rem;
+  background: #fafafa;
+}
+.explainer h3 {
+  font-size: .88rem;
+  font-weight: 700;
+  margin-bottom: .3rem;
+}
+.explainer p {
+  font-size: .85rem;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* footer */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: .75rem;
+  color: #aaa;
+  border-top: 1px solid #eee;
+  margin-top: 1rem;
+}
+.site-footer a { color: #aaa; }
+.site-footer a:hover { color: #666; }
+
+@media (max-width: 700px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .timeline-item { grid-template-columns: 1fr; gap: .2rem; }
+  .contract-card { flex-direction: column; text-align: center; }
+  .contract-card .price-display { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar is-fixed-top is-light" role="navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" style="font-weight:700" onclick="go('home')">MIAS</a>
+    <a role="button" class="navbar-burger" data-target="navMenu" onclick="this.classList.toggle('is-active');document.getElementById('navMenu').classList.toggle('is-active')">
+      <span></span><span></span><span></span><span></span>
+    </a>
+  </div>
+  <div id="navMenu" class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item is-active" id="n-home" onclick="go('home')">Home</a>
+      <a class="navbar-item" id="n-results" onclick="go('results')">Results</a>
+      <a class="navbar-item" id="n-demo" onclick="go('demo')">Demo</a>
+      <a class="navbar-item" id="n-team" onclick="go('team')">Team</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══ HOME ═══ -->
+<div id="p-home" class="pg on">
+
+<div class="project-hero">
+  <h1>Design of a Market Integrity Analysis System for Prediction Markets</h1>
+  <div class="authors">
+    <a href="mailto:a.malikanand@wustl.edu">Al Malik Anand</a>,
+    <a href="mailto:haught@wustl.edu">Nick Haught</a>
+  </div>
+  <div class="affiliation">Washington University in St. Louis</div>
+  <div class="conference">ESE 4970 Capstone Design, Spring 2026</div>
+  <div class="project-links">
+    <a href="https://github.com/NickHaught/market-integrity-capstone" target="_blank">Code</a>
+    <a onclick="go('results')" style="cursor:pointer">Results</a>
+    <a onclick="go('demo')" style="cursor:pointer">Live Demo</a>
+    <!-- TODO: add poster or report PDF link here if you want -->
+  </div>
+</div>
+
+<div class="content-section">
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+<div class="content-section">
+  <h2>Abstract</h2>
+  <p>
+    Prediction markets let people bet on future events, and the price reflects
+    how likely the crowd thinks something is. Platforms like Polymarket and Kalshi
+    have made these markets mainstream for forecasting elections, policy, and world
+    events. The problem is that in thin markets, bad actors can game the system
+    through wash trading, pump-and-dump schemes, and other manipulation.
+  </p>
+  <p>
+    We built a simulation and detection framework that models these behaviors and
+    tests different detection algorithms against them. The system uses a Mesa-based
+    agent model with a continuous double auction order book, graph-based wash trade
+    detection reformulated as an optimization problem, and transient response
+    analysis from control theory to measure how much manipulation distorts the
+    forecast. Branch and Bound outperformed traditional dynamic programming in
+    both speed and accuracy, and is the only approach that meets a real-time budget.
+  </p>
+</div>
+
+<div class="content-section">
+  <h2>Background</h2>
+  <p>
+    Prediction markets have been around in various forms since the 1800s. The core
+    idea is simple: aggregate what a bunch of people think into one number. The
+    price of a contract is the implied probability of an event happening.
+  </p>
+  <p>
+    Wash trading means trading with yourself or coordinated partners to create
+    fake volume. No real ownership changes hands, but the market looks more active
+    and the price gets pushed. Pump-and-dump is when a group buys aggressively to
+    inflate the price, then sells once others pile in. These have been documented
+    in political betting markets [1], and detection is still fragmented even in
+    traditional finance [2]. Prediction markets are thinner and more event-driven,
+    which makes it harder to catch.
+  </p>
+</div>
+
+<div class="content-section">
+  <h2>Methods</h2>
+  <p>
+    Three main components: a simulated market, graph-based detection, and transient
+    response analysis.
+  </p>
+  <h3>Agent-Based Model</h3>
+  <p>
+    Built in Mesa with a continuous double auction order book. The market has noise
+    traders, informed traders, liquidity providers, wash trade rings, and
+    pump-and-dump coalitions. Everything is parameterizable.
+  </p>
+  <h3>Graph-Based Detection</h3>
+  <p>
+    We build directed graphs from the trade log and look for self-loops and dense
+    cycle structures. We reformulated wash trade detection as a subset matching
+    problem and compared dynamic programming, ILP, and Branch and Bound.
+  </p>
+  <h3>Transient Response</h3>
+  <p>
+    We treat the market like a feedback system and measure how it responds to
+    manipulation shocks. Same metrics as characterizing a fault on a power grid:
+    overshoot, settling time, impedance.
+  </p>
+
+  <table class="simple-table">
+    <thead><tr><th>Power Grid</th><th>Market Equivalent</th></tr></thead>
+    <tbody>
+      <tr><td>Steady-state voltage</td><td>Fair-value price (true probability)</td></tr>
+      <tr><td>Load disturbance</td><td>Manipulation shock</td></tr>
+      <tr><td>Settling time</td><td>Ticks until price recovers</td></tr>
+      <tr><td>Overshoot</td><td>Max deviation after shock</td></tr>
+      <tr><td>System impedance</td><td>Price impact per unit manipulation</td></tr>
+    </tbody>
+  </table>
+
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+<div class="content-section">
+  <h2>Timeline</h2>
+  <div class="timeline-item">
+    <div class="when">Jan - Feb</div>
+    <div>
+      <h4>Stage 1: Core Sim</h4>
+      <p>Built Mesa ABM and order book. Got digraph detection working with DP. Showed DP is too slow for real-time.</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="when">Feb - Apr</div>
+    <div>
+      <h4>Stage 2: Optimization</h4>
+      <p>Tested ILP and BnB against DP. Benchmarked runtime. BnB was the only one under 100ms.</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="when">Apr - May</div>
+    <div>
+      <h4>Stage 3: Analysis</h4>
+      <p>Ran pump-and-dump experiments. Measured overshoot, settling time, and how detection speed changes the outcome. Wrote it all up.</p>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2>References</h2>
+  <p style="font-size:.88rem">
+    [1] Rothschild & Sethi, "Trading strategies in prediction markets," <em>J. Prediction Markets</em>, 2016.<br>
+    [2] Khodabandehlou & Hashemi, "Market manipulation detection: A systematic review," <em>Expert Syst. w/ Appl.</em>, 2022.<br>
+    [3] Cao, Du, & Tse, "Detecting wash trading using digraphs and DP," <em>IEEE CIFEr</em>, 2015.
+  </p>
+</div>
+
+</div>
+
+
+<!-- ═══ RESULTS ═══ -->
+<div id="p-results" class="pg">
+
+<div class="project-hero" style="padding-top:4.5rem;padding-bottom:1.5rem">
+  <h1>Results</h1>
+  <div class="affiliation">Detection performance and manipulation impact analysis</div>
+</div>
+
+<div class="content-section">
+  <h2>Detection: BnB vs DP</h2>
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">95%</div><div class="lbl">BnB Recall</div></div>
+    <div class="stat-box"><div class="num">87%</div><div class="lbl">BnB Precision</div></div>
+    <div class="stat-box"><div class="num">75%</div><div class="lbl">DP Recall</div></div>
+    <div class="stat-box"><div class="num">74%</div><div class="lbl">DP Precision</div></div>
+  </div>
+  <p>
+    BnB reformulates detection as an optimization task and prunes branches that
+    can't improve the solution. DP relies on structural cycle detection which gets
+    bypassed by complex trading patterns. BnB is also the only approach that stays
+    under 100ms.
+  </p>
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+<div class="content-section">
+  <h2>Runtime Scaling</h2>
+  <p>
+    As order count grows, DP runtime blows up. BnB stays manageable. This is
+    why BnB is the only viable option for anything close to real-time.
+  </p>
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+<div class="content-section">
+  <h2>Manipulation Impact</h2>
+  <div class="stats-row">
+    <div class="stat-box"><div class="num">31.2%</div><div class="lbl">Overshoot</div></div>
+    <div class="stat-box"><div class="num">15.9%</div><div class="lbl">Undershoot</div></div>
+    <div class="stat-box"><div class="num">40+</div><div class="lbl">Ticks to Settle</div></div>
+    <div class="stat-box"><div class="num">5.4%</div><div class="lbl">Prob. Distortion</div></div>
+  </div>
+  <p>
+    Whale-driven pump-and-dumps caused 31.2% overshoot and 15.9% undershoot.
+    Recovery took over 40 ticks. Even a single wash ring distorted implied
+    probability by 5.4%.
+  </p>
+  <div class="fig-placeholder">Figure here</div>
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+<div class="content-section">
+  <h2>Detection Speed vs Recovery</h2>
+  <p>
+    BnB catches it in ~4 ticks, overshoot stays at 1.9%. DP takes ~20 ticks,
+    overshoot triples to 5.1%. No detection at all: 8.1% overshoot, 80+ ticks
+    to recover. Detection latency directly controls how much damage gets done.
+  </p>
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+<div class="content-section">
+  <h2>Takeaway</h2>
+  <p>
+    In prediction markets, price is probability. Manipulation doesn't just
+    inflate volume, it corrupts the forecast. Reformulating detection as an
+    optimization problem makes it faster and more accurate, and that speed
+    directly reduces how much the forecast gets messed up.
+  </p>
+  <div class="fig-placeholder">Figure here</div>
+</div>
+
+</div>
+
+
+<!-- ═══ DEMO ═══ -->
+<div id="p-demo" class="pg">
+
+<div class="demo-intro">
+  <h1>Prediction Market Simulation</h1>
+  <p>A live simulation of a prediction market contract. Inject different types
+  of manipulation and see what happens to the price.</p>
+</div>
+
+<div class="demo-wrap">
+
+  <div class="contract-card">
+    <div>
+      <div class="tag-label">Binary Contract</div>
+      <div class="question">Will global average temperature exceed 1.5°C above pre-industrial by 2030?</div>
+    </div>
+    <div class="price-display">
+      <div class="price-val" id="mp">$0.55</div>
+      <div class="price-sub">= 55% implied probability</div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="dbtn on" id="b-norm" onclick="setM('normal')">Normal Market</button>
+    <button class="dbtn warn" id="b-wash" onclick="setM('wash')">Inject Wash Trading</button>
+    <button class="dbtn warn" id="b-pump" onclick="setM('pump')">Inject Pump & Dump</button>
+    <button class="dbtn" onclick="resetSim()">Reset</button>
+  </div>
+
+  <div class="chart-container"><canvas id="mc"></canvas></div>
+
+  <div class="status-line">
+    <span>Tick: <b id="st">0</b></span>
+    <span>Agents: <b>48</b></span>
+    <span>Mode: <b id="sm">Normal</b></span>
+    <span>Volume: <b id="sv">0</b></span>
+    <span>True Value: <b>0.55</b></span>
+  </div>
+
+  <div style="margin-top:.8rem">
+    <div style="font-size:.75rem;color:#999;margin-bottom:.2rem">Volume Breakdown</div>
+    <div class="vol-track">
+      <div id="vl" style="background:#7cb9e8;width:100%"></div>
+      <div id="vm" style="background:#d44;width:0%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#aaa;margin-top:.15rem">
+      <span>Legitimate</span><span>Manipulation</span>
+    </div>
+  </div>
+
+  <div class="explainer">
+    <h3>What's going on</h3>
+    <p>
+      In <b>Normal</b> mode the price bounces around the true value (0.55) from
+      noise and informed traders. <b>Wash Trading</b> injects a ring of agents
+      trading with each other to fake volume and push the price.
+      <b>Pump & Dump</b> has a whale coalition buy aggressively then sell off,
+      creating a spike and crash. Watch the price vs the green dashed line.
+    </p>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ═══ TEAM ═══ -->
+<div id="p-team" class="pg">
+
+<div class="project-hero" style="padding-top:4.5rem;padding-bottom:1.5rem">
+  <h1>Team & Advisors</h1>
+  <div class="affiliation">ESE 4970 Capstone Design · Electrical & Systems Engineering · WashU · Spring 2026</div>
+</div>
+
+<div class="content-section">
+  <h2>Project Team</h2>
+  <div class="team-grid">
+    <div class="team-member">
+      <div class="team-photo">
+        <!-- <img src="photo-al.jpg" alt="Al Malik Anand"> -->
+        Photo
+      </div>
+      <h4>Al Malik Anand</h4>
+      <div class="role">BS '26, Systems Science & Engineering, Physics, Economics</div>
+      <a class="email" href="mailto:a.malikanand@wustl.edu">a.malikanand@wustl.edu</a>
+    </div>
+    <div class="team-member">
+      <div class="team-photo">
+        <!-- <img src="photo-nick.jpg" alt="Nick Haught"> -->
+        Photo
+      </div>
+      <h4>Nick Haught</h4>
+      <div class="role">BS '26, Electrical Engineering, Computer Science</div>
+      <a class="email" href="mailto:haught@wustl.edu">haught@wustl.edu</a>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <h2>Advisors</h2>
+  <div class="team-grid">
+    <div class="team-member">
+      <div class="team-photo">Photo</div>
+      <h4>Prof. Ben Wormleighton</h4>
+      <div class="role">Primary Advisor, Electrical & Systems Engineering</div>
+    </div>
+    <div class="team-member">
+      <div class="team-photo">Photo</div>
+      <h4>Prof. Yevgeniy Vorobeychik</h4>
+      <div class="role">Co-Advisor, Computer Science & Engineering</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  ESE 4970 Capstone Design · McKelvey School of Engineering · Washington University in St. Louis · 2026<br>
+  This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+</footer>
+
+
+<script>
+function go(p) {
+  document.querySelectorAll('.pg').forEach(function(x) { x.classList.remove('on'); });
+  document.getElementById('p-' + p).classList.add('on');
+  document.querySelectorAll('.navbar-item').forEach(function(a) { a.classList.remove('is-active'); });
+  var n = document.getElementById('n-' + p);
+  if (n) n.classList.add('is-active');
+  window.scrollTo(0, 0);
+  if (p === 'demo' && !simOn) startSim();
+  // close mobile menu
+  document.getElementById('navMenu').classList.remove('is-active');
+  document.querySelector('.navbar-burger').classList.remove('is-active');
+}
+
+var simOn = false, simInt, px = [], tk = 0, md = 'normal', tv = 0, TV = 0.55;
+
+function startSim() {
+  if (simOn) return;
+  simOn = true;
+  px = [TV];
+  tk = 0;
+  tv = 0;
+  md = 'normal';
+  simInt = setInterval(tick, 90);
+}
+
+function resetSim() {
+  clearInterval(simInt);
+  simOn = false;
+  px = [];
+  tk = 0;
+  tv = 0;
+  md = 'normal';
+  document.getElementById('b-norm').classList.add('on');
+  document.getElementById('b-wash').classList.remove('on');
+  document.getElementById('b-pump').classList.remove('on');
+  var c = document.getElementById('mc');
+  var ctx = c.getContext('2d');
+  c.width = c.offsetWidth * 2;
+  c.height = c.offsetHeight * 2;
+  ctx.clearRect(0, 0, c.width, c.height);
+  startSim();
+}
+
+function setM(m) {
+  md = m;
+  document.getElementById('b-norm').classList.toggle('on', m === 'normal');
+  document.getElementById('b-wash').classList.toggle('on', m === 'wash');
+  document.getElementById('b-pump').classList.toggle('on', m === 'pump');
+  document.getElementById('sm').textContent =
+    m === 'normal' ? 'Normal' : m === 'wash' ? 'Wash Trading' : 'Pump & Dump';
+}
+
+function tick() {
+  tk++;
+  var prev = px[px.length - 1];
+  var noise = (Math.random() - 0.5) * 0.006;
+  var revert = (TV - prev) * 0.08;
+  var manip = 0, mv = 0;
+
+  if (md === 'wash') {
+    manip = (Math.random() - 0.3) * 0.012;
+    mv = Math.random() * 40 + 20;
+  } else if (md === 'pump') {
+    var phase = tk % 80;
+    if (phase < 30) manip = 0.008 + Math.random() * 0.006;
+    else if (phase < 45) manip = -0.015 - Math.random() * 0.008;
+    mv = phase < 45 ? Math.random() * 60 + 30 : 0;
+  }
+
+  var next = prev + noise + revert + manip;
+  next = Math.max(0.35, Math.min(0.75, next));
+  px.push(next);
+
+  var lv = Math.random() * 30 + 10;
+  tv += lv + mv;
+
+  var pe = document.getElementById('mp');
+  pe.textContent = '$' + next.toFixed(2);
+  pe.className = 'price-val ' + (next > prev ? 'up' : 'dn');
+  document.getElementById('st').textContent = tk;
+  document.getElementById('sv').textContent = Math.round(tv);
+
+  var pct = mv / (lv + mv) * 100;
+  document.getElementById('vl').style.width = (100 - pct) + '%';
+  document.getElementById('vm').style.width = pct + '%';
+
+  draw();
+}
+
+function draw() {
+  var c = document.getElementById('mc');
+  var ctx = c.getContext('2d');
+  var W = c.offsetWidth * 2;
+  var H = c.offsetHeight * 2;
+  c.width = W;
+  c.height = H;
+
+  var pad = { t: 24, b: 32, l: 50, r: 14 };
+  var cw = W - pad.l - pad.r;
+  var ch = H - pad.t - pad.b;
+  var show = px.slice(-200);
+  var mn = Math.min.apply(null, show.concat([TV - 0.03]));
+  var mx = Math.max.apply(null, show.concat([TV + 0.03]));
+
+  function toX(i) { return pad.l + (i / (show.length - 1 || 1)) * cw; }
+  function toY(v) { return pad.t + (1 - (v - mn) / (mx - mn || 1)) * ch; }
+
+  // grid
+  ctx.strokeStyle = '#e8e8e8';
+  ctx.lineWidth = 1;
+  for (var i = 0; i < 6; i++) {
+    var y = pad.t + ch * i / 5;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(W - pad.r, y);
+    ctx.stroke();
+    ctx.fillStyle = '#aaa';
+    ctx.font = (W > 600 ? '18' : '14') + 'px monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText((mx - (mx - mn) * i / 5).toFixed(2), pad.l - 6, y + 5);
+  }
+
+  // true value
+  ctx.setLineDash([6, 5]);
+  ctx.strokeStyle = '#22a867';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(pad.l, toY(TV));
+  ctx.lineTo(W - pad.r, toY(TV));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // manipulation shading
+  if (md !== 'normal') {
+    ctx.fillStyle = md === 'wash' ? 'rgba(221,68,68,.05)' : 'rgba(221,68,68,.08)';
+    ctx.fillRect(pad.l, pad.t, cw, ch);
+  }
+
+  // price line
+  ctx.beginPath();
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 2;
+  for (var j = 0; j < show.length; j++) {
+    if (j === 0) ctx.moveTo(toX(j), toY(show[j]));
+    else ctx.lineTo(toX(j), toY(show[j]));
+  }
+  ctx.stroke();
+}
+</script>
+</body>
+</html>
