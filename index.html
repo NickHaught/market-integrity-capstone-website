@@ -11,8 +11,6 @@ body {
   font-family: 'Noto Sans', sans-serif;
   color: #333;
 }
-
-/* override bulma navbar */
 .navbar {
   border-bottom: 1px solid #eee;
 }
@@ -23,13 +21,10 @@ body {
   font-weight: 700;
   color: #363636 !important;
 }
-
-/* page routing */
 .pg { display: none; }
 .pg.on { display: block; animation: fadeIn .3s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* hero section */
 .project-hero {
   padding: 5rem 1.5rem 2.5rem;
   text-align: center;
@@ -79,7 +74,6 @@ body {
   text-decoration: none;
 }
 
-/* content sections */
 .content-section {
   max-width: 780px;
   margin: 0 auto;
@@ -107,22 +101,26 @@ body {
   margin-bottom: .7rem;
 }
 
-/* figure placeholder */
-.fig-placeholder {
-  border: 1px dashed #ccc;
-  border-radius: 4px;
-  padding: 3rem 1rem;
+/* figures */
+.figure {
+  margin: 1.4rem 0;
   text-align: center;
-  color: #aaa;
-  font-size: .85rem;
-  margin: 1.2rem 0;
-  min-height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+.figure img {
+  max-width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+.figure .caption {
+  font-size: .82rem;
+  color: #888;
+  margin-top: .4rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
 }
 
-/* simple table */
 .simple-table {
   width: 100%;
   border-collapse: collapse;
@@ -145,7 +143,6 @@ body {
   color: #555;
 }
 
-/* stats grid */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -171,7 +168,28 @@ body {
   margin-top: .15rem;
 }
 
-/* timeline */
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+  margin: 1rem 0;
+}
+.metrics-table th {
+  text-align: left;
+  padding: .5rem .7rem;
+  border-bottom: 2px solid #ddd;
+  font-weight: 700;
+  font-size: .78rem;
+  color: #666;
+}
+.metrics-table td {
+  padding: .45rem .7rem;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+.metrics-table .check { color: #22a867; }
+.metrics-table .miss { color: #d44; }
+
 .timeline-item {
   display: grid;
   grid-template-columns: 100px 1fr;
@@ -195,7 +213,6 @@ body {
   margin-bottom: 0;
 }
 
-/* team */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -206,8 +223,8 @@ body {
   text-align: center;
 }
 .team-photo {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: #f0f0f0;
   margin: 0 auto .7rem;
@@ -238,8 +255,14 @@ body {
   color: #4a8fe7;
   margin-top: .2rem;
 }
+.team-member .contrib {
+  font-size: .78rem;
+  color: #999;
+  margin-top: .3rem;
+  line-height: 1.5;
+}
 
-/* market demo */
+/* demo */
 .demo-intro {
   padding: 4.5rem 1.5rem 1.5rem;
   text-align: center;
@@ -285,9 +308,7 @@ body {
   font-weight: 600;
   font-size: .95rem;
 }
-.contract-card .price-display {
-  text-align: right;
-}
+.contract-card .price-display { text-align: right; }
 .contract-card .price-val {
   font-size: 1.6rem;
   font-weight: 700;
@@ -296,10 +317,7 @@ body {
 }
 .contract-card .price-val.up { color: #22a867; }
 .contract-card .price-val.dn { color: #d44; }
-.contract-card .price-sub {
-  font-size: .7rem;
-  color: #999;
-}
+.contract-card .price-sub { font-size: .7rem; color: #999; }
 .chart-container {
   border: 1px solid #e0e0e0;
   border-radius: 6px;
@@ -369,7 +387,6 @@ body {
   margin-bottom: 0;
 }
 
-/* footer */
 .site-footer {
   text-align: center;
   padding: 2rem 1.5rem;
@@ -391,7 +408,6 @@ body {
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="navbar is-fixed-top is-light" role="navigation">
   <div class="navbar-brand">
     <a class="navbar-item" style="font-weight:700" onclick="go('home')">MIAS</a>
@@ -410,11 +426,11 @@ body {
 </nav>
 
 
-<!-- ═══ HOME ═══ -->
+<!-- ═══════════════════ HOME ═══════════════════ -->
 <div id="p-home" class="pg on">
 
 <div class="project-hero">
-  <h1>Design of a Market Integrity Analysis System for Prediction Markets</h1>
+  <h1>Design and Evaluation of a Market Integrity Analysis System for Prediction Markets</h1>
   <div class="authors">
     <a href="mailto:a.malikanand@wustl.edu">Al Malik Anand</a>,
     <a href="mailto:haught@wustl.edu">Nick Haught</a>
@@ -422,92 +438,163 @@ body {
   <div class="affiliation">Washington University in St. Louis</div>
   <div class="conference">ESE 4970 Capstone Design, Spring 2026</div>
   <div class="project-links">
+    <a href="paper.pdf" target="_blank">PDF</a>
     <a href="https://github.com/NickHaught/market-integrity-capstone" target="_blank">Code</a>
     <a onclick="go('results')" style="cursor:pointer">Results</a>
     <a onclick="go('demo')" style="cursor:pointer">Live Demo</a>
-    <!-- TODO: add poster or report PDF link here if you want -->
   </div>
-</div>
-
-<div class="content-section">
-  <div class="fig-placeholder">Figure here</div>
 </div>
 
 <div class="content-section">
   <h2>Abstract</h2>
   <p>
-    Prediction markets let people bet on future events, and the price reflects
-    how likely the crowd thinks something is. Platforms like Polymarket and Kalshi
-    have made these markets mainstream for forecasting elections, policy, and world
-    events. The problem is that in thin markets, bad actors can game the system
-    through wash trading, pump-and-dump schemes, and other manipulation.
+    This project studies market integrity in prediction markets through a
+    simulation and detection framework grounded in market microstructure and
+    optimization. Prediction markets operate through event contracts that trade
+    between zero and one, where the price reflects the implied probability of
+    an event occurring. The reliability of this depends on sufficient liquidity,
+    balanced participation, and resistance to strategic interference. In
+    practice, those conditions are often not met, especially in thinly traded
+    markets.
   </p>
   <p>
-    We built a simulation and detection framework that models these behaviors and
-    tests different detection algorithms against them. The system uses a Mesa-based
-    agent model with a continuous double auction order book, graph-based wash trade
-    detection reformulated as an optimization problem, and transient response
-    analysis from control theory to measure how much manipulation distorts the
-    forecast. Branch and Bound outperformed traditional dynamic programming in
-    both speed and accuracy, and is the only approach that meets a real-time budget.
+    We developed a modular agent-based system using the Mesa framework,
+    structured around a continuous double auction with a central limit order
+    book. The system supports heterogeneous agents including noise traders,
+    informed traders, and multiple classes of strategic manipulators. The
+    central methodological focus is wash trading detection under a fixed
+    structural formulation, comparing Dynamic Programming, Integer Linear
+    Programming, and Branch and Bound. BnB achieves higher detection accuracy
+    and computational efficiency relative to the other methods, with the
+    pruning mechanism allowing large portions of the solution space to be
+    eliminated early based on bounding conditions.
   </p>
 </div>
 
 <div class="content-section">
   <h2>Background</h2>
   <p>
-    Prediction markets have been around in various forms since the 1800s. The core
-    idea is simple: aggregate what a bunch of people think into one number. The
-    price of a contract is the implied probability of an event happening.
+    Prediction markets have emerged as a mechanism for aggregating dispersed
+    information into a single market signal through trading activity. Prices
+    are interpreted as implied probabilities of future outcomes. Prior work has
+    shown that prediction markets can perform competitively with, and sometimes
+    outperform, traditional forecasting methods like polling or expert analysis.
   </p>
   <p>
-    Wash trading means trading with yourself or coordinated partners to create
-    fake volume. No real ownership changes hands, but the market looks more active
-    and the price gets pushed. Pump-and-dump is when a group buys aggressively to
-    inflate the price, then sells once others pile in. These have been documented
-    in political betting markets [1], and detection is still fragmented even in
-    traditional finance [2]. Prediction markets are thinner and more event-driven,
-    which makes it harder to catch.
+    Because these probabilities are observable and widely referenced in media,
+    policy discussions, and strategic decision-making, they extend beyond purely
+    financial relevance and can influence perception and belief formation. This
+    creates a feedback loop where market prices don't just reflect beliefs but
+    can also shape them.
+  </p>
+  <p>
+    Manipulation risk is real. Rasooly and Rozzi demonstrated through a
+    large-scale field experiment that prediction markets are manipulable,
+    showing that even relatively small trades could produce price effects
+    persisting up to 60 days. In low-liquidity environments, fewer
+    counteracting trades exist to correct distortions, allowing manipulative
+    behavior to have a stronger and longer-lasting effect.
+  </p>
+
+  <div class="figure">
+    <img src="figures/fig1-digraphs.png" alt="Digraph representations of manipulation types">
+    <div class="caption"><b>Figure 1:</b> Digraph representations of manipulation types. Left: simple wash trade cycle between two agents. Right: a coordinated multi-agent trading ring forming a closed directed cycle.</div>
+  </div>
+
+  <h3>Wash Trading</h3>
+  <p>
+    Wash trading operates through cyclic self-matching, where a set of
+    colluding agents trade among themselves in a closed loop. Agent A sells to
+    agent B, who sells back to A, inflating volume without any real transfer of
+    ownership. A more complex variant involves coordinated ring structures
+    where multiple agents form a directed cycle (A → B → C → A). No
+    individual transaction appears suspicious in isolation, but the aggregate
+    structure forms a closed flow of trades.
+  </p>
+
+  <h3>Pump and Dump</h3>
+  <p>
+    Whale distortion is modeled through a high-capital agent that initiates
+    aggressive buy orders, driving the mid-price upward. This is followed by a
+    reversal phase where the agent exits positions through sell orders once
+    others have responded to the artificially elevated price. Unlike wash
+    trading, which primarily affects volume and trade structure, whale-based
+    manipulation produces a transient shock in price dynamics.
   </p>
 </div>
 
 <div class="content-section">
   <h2>Methods</h2>
+
+  <h3>Agent-Based Simulation</h3>
   <p>
-    Three main components: a simulated market, graph-based detection, and transient
-    response analysis.
+    The market environment is implemented using Mesa, replicating a continuous
+    double auction with a central limit order book. The CLOB maintains bids in
+    descending price order and asks in ascending order. The matching engine
+    follows price-time priority. Partial fills are supported. The simulation
+    tracks all executed trades including price, volume, timestamp, and
+    participating agents.
   </p>
-  <h3>Agent-Based Model</h3>
+
+  <div class="figure">
+    <img src="figures/fig2-architecture.png" alt="Simulation architecture">
+    <div class="caption"><b>Figure 2:</b> Simulation architecture. Agents submit orders to the CLOB, matched trades are logged, and detection algorithms scan the trade log for wash ring cycles and anomalous patterns.</div>
+  </div>
+
+  <h3>Digraph-Based Detection with Dynamic Programming</h3>
   <p>
-    Built in Mesa with a continuous double auction order book. The market has noise
-    traders, informed traders, liquidity providers, wash trade rings, and
-    pump-and-dump coalitions. Everything is parameterizable.
+    The detection framework is built on a digraph representation of trade flows
+    where nodes are traders and directed edges are executed transactions. Wash
+    trading is defined through two properties: trades must occur in tightly
+    matched pairs satisfying constraints on time, price, and volume, and they
+    must collectively form a closed cycle where total signed volume sums to
+    zero. The subset selection problem is equivalent to a knapsack formulation.
+    DP is the baseline, recursively constructing feasible subsets, but the
+    number of possible subsets grows combinatorially.
   </p>
-  <h3>Graph-Based Detection</h3>
+
+  <h3>Integer Linear Programming</h3>
   <p>
-    We build directed graphs from the trade log and look for self-loops and dense
-    cycle structures. We reformulated wash trade detection as a subset matching
-    problem and compared dynamic programming, ILP, and Branch and Bound.
+    The detection problem is re-expressed as an ILP. Each candidate trade gets
+    a binary decision variable indicating whether it's selected as part of a
+    wash structure. The objective maximizes total matched volume across selected
+    trades. The core constraint enforces flow conservation: for each trader,
+    the sum of signed trade volumes must be zero. This directly encodes the
+    structural definition of wash trading from the digraph representation.
   </p>
-  <h3>Transient Response</h3>
+
+  <h3>Branch and Bound</h3>
   <p>
-    We treat the market like a feedback system and measure how it responds to
-    manipulation shocks. Same metrics as characterizing a fault on a power grid:
-    overshoot, settling time, impedance.
+    BnB is applied to the same subset selection problem. It traverses the
+    search space as a decision tree where each level corresponds to including
+    or excluding a trade. At each node, an upper bound on the achievable
+    objective is computed. If this bound is less than the best solution found
+    so far, the branch is pruned. In the implemented system, pruning is
+    particularly effective because trades are pre-filtered based on tight
+    constraints in time, price, and volume, which significantly reduces the
+    number of feasible combinations.
+  </p>
+
+  <h3>Transient Response Analysis</h3>
+  <p>
+    When the whale agent injects a capital shock, the mid-price reacts like a
+    dynamical system getting hit with a step disturbance. Three control theory
+    metrics are used: overshoot (how far above true value the price gets at
+    peak), undershoot (the drop below fair value during the dump phase), and
+    settling time (how many ticks until the price stays within a 5% band
+    around true value).
   </p>
 
   <table class="simple-table">
-    <thead><tr><th>Power Grid</th><th>Market Equivalent</th></tr></thead>
+    <thead><tr><th>Power Grid Concept</th><th>Market Equivalent</th></tr></thead>
     <tbody>
       <tr><td>Steady-state voltage</td><td>Fair-value price (true probability)</td></tr>
-      <tr><td>Load disturbance</td><td>Manipulation shock</td></tr>
-      <tr><td>Settling time</td><td>Ticks until price recovers</td></tr>
-      <tr><td>Overshoot</td><td>Max deviation after shock</td></tr>
-      <tr><td>System impedance</td><td>Price impact per unit manipulation</td></tr>
+      <tr><td>Load disturbance / fault</td><td>Manipulation shock</td></tr>
+      <tr><td>Settling time</td><td>Steps until price returns within ε of fair value</td></tr>
+      <tr><td>Overshoot / undershoot</td><td>Max deviation above/below fair value after shock</td></tr>
+      <tr><td>System impedance</td><td>Price impact per unit manipulation pressure</td></tr>
     </tbody>
   </table>
-
-  <div class="fig-placeholder">Figure here</div>
 </div>
 
 <div class="content-section">
@@ -515,48 +602,73 @@ body {
   <div class="timeline-item">
     <div class="when">Jan - Feb</div>
     <div>
-      <h4>Stage 1: Core Sim</h4>
-      <p>Built Mesa ABM and order book. Got digraph detection working with DP. Showed DP is too slow for real-time.</p>
+      <h4>Stage 1: Core Simulation</h4>
+      <p>Literature review, Mesa ABM development, CLOB/CDA implementation, digraph DP detection. Demonstrated computational limitations of DP approach.</p>
     </div>
   </div>
   <div class="timeline-item">
     <div class="when">Feb - Apr</div>
     <div>
-      <h4>Stage 2: Optimization</h4>
-      <p>Tested ILP and BnB against DP. Benchmarked runtime. BnB was the only one under 100ms.</p>
+      <h4>Stage 2: Optimization and Evaluation</h4>
+      <p>ILP and BnB implementation, complexity evaluation, manipulation regime design. BnB identified as only real-time viable method.</p>
     </div>
   </div>
   <div class="timeline-item">
     <div class="when">Apr - May</div>
     <div>
-      <h4>Stage 3: Analysis</h4>
-      <p>Ran pump-and-dump experiments. Measured overshoot, settling time, and how detection speed changes the outcome. Wrote it all up.</p>
+      <h4>Stage 3: Analysis and Reporting</h4>
+      <p>Transient and network analysis, report writing. Additional time allocated to refining BnB formulation and performance evaluation.</p>
     </div>
+  </div>
+
+  <div class="figure" style="margin-top:1.5rem">
+    <img src="figures/fig7-gantt.png" alt="Project Gantt chart">
+    <div class="caption"><b>Figure 7:</b> Project Gantt chart showing the three-stage development timeline.</div>
   </div>
 </div>
 
 <div class="content-section">
   <h2>References</h2>
-  <p style="font-size:.88rem">
-    [1] Rothschild & Sethi, "Trading strategies in prediction markets," <em>J. Prediction Markets</em>, 2016.<br>
-    [2] Khodabandehlou & Hashemi, "Market manipulation detection: A systematic review," <em>Expert Syst. w/ Appl.</em>, 2022.<br>
-    [3] Cao, Du, & Tse, "Detecting wash trading using digraphs and DP," <em>IEEE CIFEr</em>, 2015.
+  <p style="font-size:.86rem">
+    [1] Rothschild & Sethi, "Trading strategies and market microstructure: Evidence from a prediction market," <em>J. Prediction Markets</em>, 2016.<br>
+    [2] Khodabandehlou & Zivari Hashemi, "Market manipulation detection: A systematic literature review," <em>Expert Syst. w/ Appl.</em>, 2022.<br>
+    [3] Cao, Du, & Tse, "Detecting wash trading in financial markets using digraphs and dynamic programming," <em>IEEE CIFEr</em>, 2015.<br>
+    [4] Chen et al., "Gaming prediction markets: Equilibrium strategies with a market maker," <em>Algorithmica</em>, 2010.
   </p>
 </div>
 
 </div>
 
 
-<!-- ═══ RESULTS ═══ -->
+<!-- ═══════════════════ RESULTS ═══════════════════ -->
 <div id="p-results" class="pg">
 
 <div class="project-hero" style="padding-top:4.5rem;padding-bottom:1.5rem">
   <h1>Results</h1>
-  <div class="affiliation">Detection performance and manipulation impact analysis</div>
+  <div class="affiliation">Detection performance, runtime scaling, and manipulation impact analysis</div>
 </div>
 
 <div class="content-section">
-  <h2>Detection: BnB vs DP</h2>
+  <h2>Summary</h2>
+  <table class="metrics-table">
+    <thead>
+      <tr><th>Metric</th><th>Target</th><th>Achieved</th><th>Met?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>BnB Precision</td><td>≥ 0.80</td><td>0.87</td><td class="check">Yes</td></tr>
+      <tr><td>BnB Recall</td><td>≥ 0.80</td><td>0.95</td><td class="check">Yes</td></tr>
+      <tr><td>DP Precision</td><td>≥ 0.80</td><td>0.74</td><td class="miss">No</td></tr>
+      <tr><td>DP Recall</td><td>≥ 0.80</td><td>0.75</td><td class="miss">No</td></tr>
+      <tr><td>BnB Runtime (1000 orders)</td><td>< 100 ms</td><td>~80 ms</td><td class="check">Yes</td></tr>
+      <tr><td>Wash Ring Price Distortion</td><td>measured</td><td>5.4%</td><td>N/A</td></tr>
+      <tr><td>Whale Overshoot</td><td>measured</td><td>31.2%</td><td>N/A</td></tr>
+      <tr><td>Whale Settling Time</td><td>measured</td><td>> 40 ticks</td><td>N/A</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="content-section">
+  <h2>Wash Trading Detection</h2>
   <div class="stats-row">
     <div class="stat-box"><div class="num">95%</div><div class="lbl">BnB Recall</div></div>
     <div class="stat-box"><div class="num">87%</div><div class="lbl">BnB Precision</div></div>
@@ -564,25 +676,56 @@ body {
     <div class="stat-box"><div class="num">74%</div><div class="lbl">DP Precision</div></div>
   </div>
   <p>
-    BnB reformulates detection as an optimization task and prunes branches that
-    can't improve the solution. DP relies on structural cycle detection which gets
-    bypassed by complex trading patterns. BnB is also the only approach that stays
-    under 100ms.
+    BnB outperformed Digraph DP on every detection metric. DP relies on
+    structural cycle detection that tends to get bypassed by more complex
+    trading patterns, especially coordinated rings with more than two agents.
+    BnB is better at pruning the search space, and ended up with a recall of
+    0.95 compared to DP's 0.75, and a precision of 0.87 versus 0.74. Looking
+    at the confusion matrices, BnB only missed 9 wash trades (false negatives),
+    while DP missed 48.
   </p>
-  <div class="fig-placeholder">Figure here</div>
+  <p>
+    DP enumerates all feasible subsets that satisfy volume constraints, which
+    leads to multiple competing solutions when trade flows are symmetric. BnB
+    prioritizes high-value subsets early through ordering and pruning, allowing
+    it to converge toward structurally consistent cycles that better align with
+    ground truth. The marginal improvement of BnB over ILP (0.87 vs. 0.86
+    precision, identical recall) suggests both methods capture the same
+    structural constraints, but BnB benefits from more efficient exploration.
+  </p>
+
+  <div class="figure">
+    <img src="figures/fig4-confusion-matrices.png" alt="Detection accuracy comparison">
+    <div class="caption"><b>Figure 4:</b> Detection accuracy comparison. BnB (P=0.87, R=0.95) vs. DP (P=0.74, R=0.75). BnB produces fewer false negatives and fewer missed wash trades overall.</div>
+  </div>
 </div>
 
 <div class="content-section">
   <h2>Runtime Scaling</h2>
   <p>
-    As order count grows, DP runtime blows up. BnB stays manageable. This is
-    why BnB is the only viable option for anything close to real-time.
+    BnB is the only approach that stays under 100 ms across all tested volumes
+    up to 1000 orders. DP runtime grows fast and goes past 300 ms at 1000
+    orders, making it impractical for real-time use. DP exhibits
+    near-combinatorial growth because it evaluates a large portion of the
+    feasible subset space. BnB maintains near-linear growth due to effective
+    pruning.
   </p>
-  <div class="fig-placeholder">Figure here</div>
+  <p>
+    Memory usage reinforces this. DP requires maintaining intermediate states
+    for a large number of partial subsets. BnB, by pruning entire branches
+    early, maintains a much smaller active search tree. Real-time deployment
+    requires both low latency and predictable memory usage, and BnB is the
+    only method that satisfies both.
+  </p>
+
+  <div class="figure">
+    <img src="figures/fig5-runtime-scaling.png" alt="BnB vs DP runtime scaling">
+    <div class="caption"><b>Figure 5:</b> BnB vs. DP runtime as order count grows. BnB remains sub-100 ms while DP scales poorly.</div>
+  </div>
 </div>
 
 <div class="content-section">
-  <h2>Manipulation Impact</h2>
+  <h2>Transient Response and Whale Impact</h2>
   <div class="stats-row">
     <div class="stat-box"><div class="num">31.2%</div><div class="lbl">Overshoot</div></div>
     <div class="stat-box"><div class="num">15.9%</div><div class="lbl">Undershoot</div></div>
@@ -590,45 +733,73 @@ body {
     <div class="stat-box"><div class="num">5.4%</div><div class="lbl">Prob. Distortion</div></div>
   </div>
   <p>
-    Whale-driven pump-and-dumps caused 31.2% overshoot and 15.9% undershoot.
-    Recovery took over 40 ticks. Even a single wash ring distorted implied
-    probability by 5.4%.
+    Detection latency directly determines how bad the price distortion gets.
+    BnB catches manipulation in about 4 ticks, keeping overshoot at 1.9%. DP
+    takes about 20 ticks, so overshoot triples to 5.1%. With no detection, the
+    price overshoots by 8.1% and takes 80+ ticks to come back.
   </p>
-  <div class="fig-placeholder">Figure here</div>
-  <div class="fig-placeholder">Figure here</div>
+  <p>
+    The response plots show a clear three-phase dynamic: rapid price increase
+    during the pump phase, sharp reversal, and slower recovery toward steady
+    state. The 31.2% overshoot in uncontrolled scenarios shows how sensitive
+    prediction market prices are to concentrated trading pressure. This
+    confirms that detection is not just a classification problem but a control
+    problem, where response time determines system stability.
+  </p>
+
+  <div class="figure">
+    <img src="figures/fig3-detection-speed.png" alt="Detection speed vs market recovery">
+    <div class="caption"><b>Figure 3:</b> Detection speed vs. market recovery. BnB detection (green) keeps overshoot to 1.9%, DP (blue) allows 5.1%, no detection (red) results in 8.1% overshoot. The green band is the 5% settling range around 0.55.</div>
+  </div>
 </div>
 
 <div class="content-section">
-  <h2>Detection Speed vs Recovery</h2>
+  <h2>Network and Community Detection</h2>
   <p>
-    BnB catches it in ~4 ticks, overshoot stays at 1.9%. DP takes ~20 ticks,
-    overshoot triples to 5.1%. No detection at all: 8.1% overshoot, 80+ ticks
-    to recover. Detection latency directly controls how much damage gets done.
+    The trade graph analysis shows how market topology changes across the three
+    phases of a pump-and-dump. During warm-up, the graph is spread out with no
+    obvious clusters. During the pump phase, it centralizes around manipulator
+    nodes which build up high degree and betweenness centrality. Community
+    detection algorithms pick out wash traders and ring clusters during this
+    phase. Once the dump phase begins, these structures break down as
+    manipulators exit and trading returns to a more distributed pattern.
   </p>
-  <div class="fig-placeholder">Figure here</div>
+
+  <div class="figure">
+    <img src="figures/fig6-trade-graphs.png" alt="Trade graph evolution across market phases">
+    <div class="caption"><b>Figure 6:</b> Trade graph evolution across market phases. Left: diffuse warm-up. Center: pump phase with tightly connected manipulation subgraphs. Right: dump phase as structure disperses. Node size reflects centrality.</div>
+  </div>
 </div>
 
 <div class="content-section">
-  <h2>Takeaway</h2>
+  <h2>Conclusions</h2>
   <p>
-    In prediction markets, price is probability. Manipulation doesn't just
-    inflate volume, it corrupts the forecast. Reformulating detection as an
-    optimization problem makes it faster and more accurate, and that speed
-    directly reduces how much the forecast gets messed up.
+    BnB achieves a recall of 0.95 and precision of 0.87, outperforming the DP
+    baseline across all metrics. It is the only method that satisfies real-time
+    constraints, maintaining sub-100 ms runtime at 1000 orders. Wash trading
+    introduces a price distortion of approximately 5.4%, while whale-based
+    manipulation produces 31.2% overshoot and takes 40+ ticks to settle.
   </p>
-  <div class="fig-placeholder">Figure here</div>
+  <p>
+    In prediction markets, prices are interpreted as probabilities. Manipulation
+    doesn't simply affect trading outcomes; it compromises the integrity of the
+    forecast itself. Distorted prices lead to distorted beliefs, and in settings
+    where these markets are used as signals for decision-making, the
+    consequences extend beyond the market. Effective detection requires
+    structural, temporal, and behavioral analysis combined with computational
+    efficiency.
+  </p>
 </div>
 
 </div>
 
 
-<!-- ═══ DEMO ═══ -->
+<!-- ═══════════════════ DEMO ═══════════════════ -->
 <div id="p-demo" class="pg">
 
 <div class="demo-intro">
   <h1>Prediction Market Simulation</h1>
-  <p>A live simulation of a prediction market contract. Inject different types
-  of manipulation and see what happens to the price.</p>
+  <p>A live simulation of a prediction market contract. Inject manipulation and see what happens to the price.</p>
 </div>
 
 <div class="demo-wrap">
@@ -675,24 +846,24 @@ body {
   <div class="explainer">
     <h3>What's going on</h3>
     <p>
-      In <b>Normal</b> mode the price bounces around the true value (0.55) from
-      noise and informed traders. <b>Wash Trading</b> injects a ring of agents
-      trading with each other to fake volume and push the price.
-      <b>Pump & Dump</b> has a whale coalition buy aggressively then sell off,
-      creating a spike and crash. Watch the price vs the green dashed line.
+      In <b>Normal</b> mode the price bounces around 0.55 from noise and
+      informed traders. <b>Wash Trading</b> injects a ring of agents trading
+      with each other in a closed loop, inflating volume and pushing the price.
+      <b>Pump & Dump</b> has a whale buy aggressively then sell off, creating a
+      spike and crash. Watch the price relative to the green dashed true-value
+      line.
     </p>
   </div>
-
 </div>
 </div>
 
 
-<!-- ═══ TEAM ═══ -->
+<!-- ═══════════════════ TEAM ═══════════════════ -->
 <div id="p-team" class="pg">
 
 <div class="project-hero" style="padding-top:4.5rem;padding-bottom:1.5rem">
   <h1>Team & Advisors</h1>
-  <div class="affiliation">ESE 4970 Capstone Design · Electrical & Systems Engineering · WashU · Spring 2026</div>
+  <div class="affiliation">ESE 4970 Capstone Design · Electrical & Systems Engineering · Washington University in St. Louis · Spring 2026</div>
 </div>
 
 <div class="content-section">
@@ -700,21 +871,23 @@ body {
   <div class="team-grid">
     <div class="team-member">
       <div class="team-photo">
-        <!-- <img src="photo-al.jpg" alt="Al Malik Anand"> -->
-        Photo
+        <!-- Drop your photo into media/ and uncomment: -->
+        <!-- <img src="media/al-anand.jpg" alt="Al Malik Anand"> -->
       </div>
       <h4>Al Malik Anand</h4>
       <div class="role">BS '26, Systems Science & Engineering, Physics, Economics</div>
       <a class="email" href="mailto:a.malikanand@wustl.edu">a.malikanand@wustl.edu</a>
+      <div class="contrib">System architecture, agentic framework design, CLOB/CDA simulation, manipulation regime design, detection framework formulation (digraph, ILP, BnB), analytical framework</div>
     </div>
     <div class="team-member">
       <div class="team-photo">
-        <!-- <img src="photo-nick.jpg" alt="Nick Haught"> -->
-        Photo
+        <!-- Drop your photo into media/ and uncomment: -->
+        <!-- <img src="media/nick-haught.jpg" alt="Nick Haught"> -->
       </div>
       <h4>Nick Haught</h4>
       <div class="role">BS '26, Electrical Engineering, Computer Science</div>
       <a class="email" href="mailto:haught@wustl.edu">haught@wustl.edu</a>
+      <div class="contrib">Algorithm implementation (DP, BnB), software infrastructure, performance engineering, runtime/memory profiling, transient response analysis, scalability testing</div>
     </div>
   </div>
 </div>
@@ -723,14 +896,20 @@ body {
   <h2>Advisors</h2>
   <div class="team-grid">
     <div class="team-member">
-      <div class="team-photo">Photo</div>
+      <div class="team-photo">
+        <!-- <img src="media/wormleighton.png" alt="Ben Wormleighton"> -->
+      </div>
       <h4>Prof. Ben Wormleighton</h4>
-      <div class="role">Primary Advisor, Electrical & Systems Engineering</div>
+      <div class="role">Faculty Instructor, Electrical & Systems Engineering</div>
+      <div class="contrib">Continuous guidance and feedback, problem scope refinement, methodological direction</div>
     </div>
     <div class="team-member">
-      <div class="team-photo">Photo</div>
+      <div class="team-photo">
+        <!-- <img src="media/vorobeychik.png" alt="Yevgeniy Vorobeychik"> -->
+      </div>
       <h4>Prof. Yevgeniy Vorobeychik</h4>
-      <div class="role">Co-Advisor, Computer Science & Engineering</div>
+      <div class="role">Project Client, Computer Science & Engineering</div>
+      <div class="contrib">Initial project direction, domain context on adversarial behavior in market systems</div>
     </div>
   </div>
 </div>
@@ -738,7 +917,6 @@ body {
 </div>
 
 
-<!-- FOOTER -->
 <footer class="site-footer">
   ESE 4970 Capstone Design · McKelvey School of Engineering · Washington University in St. Louis · 2026<br>
   This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
@@ -754,7 +932,6 @@ function go(p) {
   if (n) n.classList.add('is-active');
   window.scrollTo(0, 0);
   if (p === 'demo' && !simOn) startSim();
-  // close mobile menu
   document.getElementById('navMenu').classList.remove('is-active');
   document.querySelector('.navbar-burger').classList.remove('is-active');
 }
@@ -853,7 +1030,6 @@ function draw() {
   function toX(i) { return pad.l + (i / (show.length - 1 || 1)) * cw; }
   function toY(v) { return pad.t + (1 - (v - mn) / (mx - mn || 1)) * ch; }
 
-  // grid
   ctx.strokeStyle = '#e8e8e8';
   ctx.lineWidth = 1;
   for (var i = 0; i < 6; i++) {
@@ -868,7 +1044,6 @@ function draw() {
     ctx.fillText((mx - (mx - mn) * i / 5).toFixed(2), pad.l - 6, y + 5);
   }
 
-  // true value
   ctx.setLineDash([6, 5]);
   ctx.strokeStyle = '#22a867';
   ctx.lineWidth = 1.5;
@@ -878,13 +1053,11 @@ function draw() {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // manipulation shading
   if (md !== 'normal') {
     ctx.fillStyle = md === 'wash' ? 'rgba(221,68,68,.05)' : 'rgba(221,68,68,.08)';
     ctx.fillRect(pad.l, pad.t, cw, ch);
   }
 
-  // price line
   ctx.beginPath();
   ctx.strokeStyle = '#333';
   ctx.lineWidth = 2;
